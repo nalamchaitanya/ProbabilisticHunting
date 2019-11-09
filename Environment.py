@@ -25,15 +25,12 @@ class Environment:
                     self.landscape[i][j] = 2
                 else:
                     self.landscape[i][j] = 3    
-
-       self.target = (random.uniform(0,self.dimension-1), random.uniform(0,self.dimension-1))
-
+        self.target = (random.uniform(0,self.dimension-1), random.uniform(0,self.dimension-1))
 
     def search(self, row, column):
         '''
         Given a row and column search according to it's landscape and return success or failure.
         '''
-
         #P(target not found | target in cell):
         d = {0:0.1, 1:0.3, 2:0.7, 3:0.9}
         if (row,column) != self.target:
