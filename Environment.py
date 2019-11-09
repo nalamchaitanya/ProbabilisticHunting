@@ -2,7 +2,6 @@ import numpy as np
 import random
 import copy
 
-#random.seed(1)
 class Environment:
     def __init__(self, d):
         '''
