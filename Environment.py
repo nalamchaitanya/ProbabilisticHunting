@@ -13,7 +13,7 @@ class Environment:
         target->(int,int) : Coordinates of the target. 
         '''
         self.dimension = d
-        self.landscape = np.zeros((self.dimension,self.dimension))
+        self.landscape = np.ndarray(shape=(self.dimension,self.dimension), dtype=int)
         for i in range(self.dimension):
             for j in range(self.dimension):
                 prob = random.uniform(0,1)
@@ -40,6 +40,3 @@ class Environment:
                 return False
             else:
                 return True
-
-
-        
