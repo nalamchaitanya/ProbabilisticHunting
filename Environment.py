@@ -13,6 +13,7 @@ class Environment:
         target->(int,int) : Coordinates of the target. 
         '''
         self.dimension = d
+        self.count = 0
         self.landscape = np.ndarray(shape=(self.dimension,self.dimension), dtype=int)
         for i in range(self.dimension):
             for j in range(self.dimension):
@@ -25,7 +26,7 @@ class Environment:
                     self.landscape[i][j] = 2
                 else:
                     self.landscape[i][j] = 3    
-        self.target = (random.uniform(0,self.dimension-1), random.uniform(0,self.dimension-1))
+        self.target = (int(random.uniform(0,self.dimension-1)), int(random.uniform(0,self.dimension-1)))
 
     def search(self, row, column):
         '''
@@ -33,10 +34,15 @@ class Environment:
         '''
         #P(target not found | target in cell):
         d = {0:0.1, 1:0.3, 2:0.7, 3:0.9}
+
         if (row,column) != self.target:
+            self.count+=1
             return False
         else:
             if random.uniform(0,1) < d[self.landscape[row][column]]:
+                self.count += 1
+                print("Target found but not found" + " " + str(self.count)+" " + str(self.landscape[row][column]))
+
                 return False
             else:
                 return True
