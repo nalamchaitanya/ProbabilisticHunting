@@ -42,7 +42,6 @@ class Environment:
             if random.uniform(0,1) < d[self.landscape[row][column]]:
                 self.count += 1
                 print("Target found but not found" + " " + str(self.count)+" " + str(self.landscape[row][column]))
-
                 return False
             else:
                 return True
