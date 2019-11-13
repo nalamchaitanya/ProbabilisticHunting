@@ -42,6 +42,8 @@ def one(a, b):
 def manhattan(a, b):
 	return abs(a[0]-b[0])+abs(a[1]-b[1])
 
+# Given a position row and col, select the top 10 maximum utility cells according to utility value
+# in a square window of k around the given cell
 def utility(row,col,agent):
 	k = 5
 	matrix = np.zeros((2 * k + 1, 2 * k + 1))
@@ -71,12 +73,17 @@ def utility(row,col,agent):
 		util_List.append((a, b))
 	return util_List
 
+# Given a pair of points a, b from s calculate the cost to go to a first, search and then go to b 
+# and search at b, we have used the probability values by multiplying while calculating cost as we
+# are storing log of the probability values
 def pairUtility(a, b, s, agent):
 	da = abs(s[0]-a[0])+abs(s[1]-a[1])
 	ab = abs(a[0]-b[0])+abs(a[1]-b[1])
 	cost = (-agent.inCellProb[a[0]][a[1]])*da + 1 + (-agent.inCellProb[b[0]][b[1]])*ab + 1
 	return cost
 
+# Given top 10 max utility pairs we iterated over each and every pair and find the pair which has
+# minimum cost and return the pair to be searched next
 def maxPair(agent):
 	row = agent.row
 	col = agent.col
