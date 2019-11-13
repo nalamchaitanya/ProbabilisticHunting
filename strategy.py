@@ -1,6 +1,7 @@
 import Agent
 import numpy as np
 import random
+import math
 
 def isInCell(agent):
     ''''
@@ -19,18 +20,41 @@ def isFoundInCell(agent):
     return list_index[int(random.uniform(0,len(list_index)))]
     # return list_index[0]
 
-def kCell(row,col,k,agent):
-    ''''This method returns the cell with maximum probability
-    at a distance of k steps from the given position'''
-    matrix=np.zeros((2*k+1,2*k+1))
-    for i in range(-k,k+1,1):
-        for j in range(-k,k+1,1):
-            if 0<=row+i<agent.dimension and 0<=col+j<agent.dimension:
-                matrix[i+k][j+k]=agent.foundInCellProb[row+i][col+j]
+# def kCell(row,col,k,agent):
+#     ''''This method returns the cell with maximum probability
+#     at a distance of k steps from the given position'''
+#     matrix=np.zeros((2*k+1,2*k+1))
+#     for i in range(-k,k+1,1):
+#         for j in range(-k,k+1,1):
+#             if 0<=row+i<agent.dimension and 0<=col+j<agent.dimension:
+#                 matrix[i+k][j+k]=agent.foundInCellProb[row+i][col+j]
+#
+#     result=np.where(matrix==np.amax(matrix))
+#     list_index=list(zip(result[0],result[1]))
+#     i,j=list_index[0]
+#     a=row+(i-k)
+#     b=col+(j-k)
+#     return a,b
 
-    result=np.where(matrix==np.amax(matrix))
-    list_index=list(zip(result[0],result[1]))
-    i,j=list_index[0]
-    a=row+(i-k)
-    b=col+(j-k)
-    return a,b
+def utility(row,col,agent):
+    matrix = np.zeros((2 * k + 1, 2 * k + 1))
+    # dist=0
+    for i in range(-k, k + 1, 1):
+        for j in range(-k, k + 1, 1):
+            if 0 <= row + i < agent.dimension and 0 <= col + j < agent.dimension:
+                dist = abs(i) + abs(j)
+                matrix[i + k][j + k] = (agent.inCellProb[row + i][col + j])/dist
+            else:
+                matrix[i + k][j + k] = -math.inf
+    util_List = []
+    for c in range(10):
+        result = np.where(matrix == np.amax(matrix))
+        list_index = list(zip(result[0], result[1]))
+        (a, b) = list_index[0]
+        if matrix[a][b] == -math.inf:
+            break
+        a = row + (a - k)
+        b = col + (b - k)
+        util_List.append((a, b))
+        matrix[a][b] = -math.inf
+    return util_List
