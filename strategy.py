@@ -58,3 +58,24 @@ def utility(row,col,agent):
         util_List.append((a, b))
         matrix[a][b] = -math.inf
     return util_List
+
+def pairUtility(a, b, s, agent):
+	da = abs(s[0]-a[0])+abs(s[1]-a[1])
+	ab = abs(a[0]-b[0])+abs(a[1]-b[1])
+	cost = (-agent.inCellProb[a[0]][a[1]])*da + 1 + (-agent.inCellProb[b[0]][b[1]])*ab + 1
+	return cost
+
+def maxPair(row, col, agent):
+	maxCost = -math.inf
+	maxx = 0
+	maxy = 0
+	utilList = utility(row, col, agent)
+	for i in range(len(utilList)):
+		for j in range(len(utilList)):
+			if i != j:
+				cost = pairUtility(utilList[i], utilList[j], (row, col), agent)
+				if cost > maxCost:
+					maxCost = cost
+					maxx = utilList[i][0]
+					maxy = utilList[i][1]
+	return (maxx, maxy)
