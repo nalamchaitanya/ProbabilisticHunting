@@ -79,7 +79,7 @@ def utility(row,col,agent):
 def pairUtility(a, b, s, agent):
 	da = abs(s[0]-a[0])+abs(s[1]-a[1])
 	ab = abs(a[0]-b[0])+abs(a[1]-b[1])
-	cost = (-agent.inCellProb[a[0]][a[1]])*da + 1 + (-agent.inCellProb[b[0]][b[1]])*ab + 1
+	cost = da + 1 + (-agent.inCellProb[a[0]][a[1]])*(ab + 1+(-agent.inCellProb[b[0]][b[1]]))
 	return cost
 
 # Given top 10 max utility pairs we iterated over each and every pair and find the pair which has

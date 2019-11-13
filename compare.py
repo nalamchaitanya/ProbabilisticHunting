@@ -8,14 +8,14 @@ import pandas as pd
 import statistics
 from collections import Counter
 
-iterations = 10
+iterations = 50
 median1List = []
 median2List = []
 mean1List = []
 mean2List = []
 mode1List = []
 mode2List = []
-for d in range(20,60,10):
+for d in range(20,110,10):
 	environ = Environment.Environment(d)
 	isInCellcount = []
 	isFoundInCellcount = []
@@ -73,18 +73,18 @@ dimensionList = range(20,110,10)
 plt.plot(dimensionList, median1List,label="Rule 1")
 plt.plot(dimensionList, median2List, label="Rule 2")
 plt.xlabel('Dimension')
-plt.ylabel('Median of search count / No of cells')
-plt.title('Rule 1 vs 2 Median')
+plt.ylabel('Median of action count / No of cells')
+plt.title('Rule 1 vs Utility')
 plt.legend()
 plt.show()
 
 fig2 = plt.figure()
 # dimensionList = range(20,80,10)
 plt.plot(dimensionList, mean1List,label="Rule 1")
-plt.plot(dimensionList, mean2List, label="Rule 2")
+plt.plot(dimensionList, mean2List, label="Utility")
 plt.xlabel('Dimension')
-plt.ylabel('Mean of search count / No of cells')
-plt.title('Rule 1 vs 2 Mean')
+plt.ylabel('Mean of action count / No of cells')
+plt.title('Rule 1 vs Utility')
 plt.legend()
 plt.show()
 
