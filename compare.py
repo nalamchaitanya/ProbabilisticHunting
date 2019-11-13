@@ -8,14 +8,14 @@ import pandas as pd
 import statistics
 from collections import Counter
 
-iterations = 50
+iterations = 10
 median1List = []
 median2List = []
 mean1List = []
 mean2List = []
 mode1List = []
 mode2List = []
-for d in range(20,110,10):
+for d in range(20,60,10):
 	environ = Environment.Environment(d)
 	isInCellcount = []
 	isFoundInCellcount = []
@@ -23,10 +23,12 @@ for d in range(20,110,10):
 		environ.count = 0
 		environ.target = (int(random.uniform(0,environ.dimension-1)), int(random.uniform(0,environ.dimension-1)))
 		agent = Agent.Agent(environ)
-		agent2 = copy.deepcopy(agent)
-		count1 = agent.getSearchCount(strategy.isInCell)
-		count2 = agent2.getSearchCount(strategy.isFoundInCell)
-		# print(str(count1)+" "+str(count2))
+		# agent2 = copy.deepcopy(agent)
+		agent3 = copy.deepcopy(agent)
+		count1 = agent.getSearchCount(strategy.isInCell, strategy.manhattan)
+		# count2 = agent2.getSearchCount(strategy.isFoundInCell, strategy.one)
+		count2 = agent3.getSearchCount(strategy.maxPair, strategy.manhattan)
+		print(str(count1)+" "+str(count2))
 		isInCellcount.append(count1)
 		isFoundInCellcount.append(count2)
 	# Do median and mode and etc caclculation here.
@@ -60,14 +62,14 @@ print('mean1: '+str(mean1List))
 print('mean2: '+str(mean2List))
 print('median1: '+str(median1List))
 print('median2: '+str(median2List))
-print('mode1: '+str(mode1List))
-print('mode2: '+str(mode2List))
+# print('mode1: '+str(mode1List))
+# print('mode2: '+str(mode2List))
 
 
 
 
 fig = plt.figure()
-dimensionList = range(20,80,10)
+dimensionList = range(20,110,10)
 plt.plot(dimensionList, median1List,label="Rule 1")
 plt.plot(dimensionList, median2List, label="Rule 2")
 plt.xlabel('Dimension')
