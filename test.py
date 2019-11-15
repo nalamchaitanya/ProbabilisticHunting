@@ -5,6 +5,7 @@ import copy
 
 environ = Environment.Environment(50)
 agent = Agent.Agent(environ)
+count = agent.getSearchCount(strategy.maxPair, strategy.manhattan, True)
 agent2 = copy.deepcopy(agent)
-print (agent.getSearchCount(strategy.isInCell))
-print (agent2.getSearchCount(strategy.isFoundInCell))
+count2 = agent.getSearchCount(strategy.maxPairMovingTarget, strategy.manhattan, True)
+print(str(count)+" "+str(count2))

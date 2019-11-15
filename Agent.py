@@ -27,7 +27,7 @@ class Agent:
         self.foundInCellProb[row][column] += math.log(self.falseNeg[self.env.landscape[row][column]],2)
 
     # Computes the number of steps taken to reach the target using probabilistic hunting
-    def getSearchCount(self, strategy, distance):
+    def getSearchCount(self, strategy, distance, moveTarget = False):
         count = 0
         self.row = 0
         self.col = 0
@@ -37,6 +37,10 @@ class Agent:
             # print("searching : "+str(row)+" "+str(column))
             # pdb.set_trace()
             self.updateProbability(row,column)
+            if(moveTarget):
+                # print("**************"+str(self.env.target))
+                self.env.move_Target()
+                # print("**************"+str(self.env.target))
             self.row = row
             self.col = column
             (row, column) = strategy(self)

@@ -1,6 +1,7 @@
 import Agent
 import numpy as np
 import random
+from math import inf
 import math
 
 def isInCell(agent):
@@ -90,7 +91,7 @@ def utilityMovingTarget(row,col,agent):
 				movingTargetProb = 0.0
 				if agent.env.landscape[row+i][col+j] == targetTerrain:
 					movingTargetProb = -math.inf
-				else
+				else:
 					movingTargetProb = agent.inCellProb[row+i][col+j] + math.log(float(1)/3, 2)
 				if(movingTargetProb == -math.inf):
 					matrix[i + k][j + k] = -math.inf
@@ -153,7 +154,7 @@ def maxPairMovingTarget(agent):
 	for i in range(len(utilList)):
 		for j in range(len(utilList)):
 			if i != j:
-				cost = pairUtilityMovingTarget(utilList[i], utilList[j], (row, col), agent.inCellProb)
+				cost = pairUtilityMovingTarget(utilList[i], utilList[j], (row, col), agent)
 				if cost < minCost:
 					minCost = cost
 					minx = utilList[i][0]
@@ -167,7 +168,7 @@ def computeMovingTargetProb(agent):
 		for j in range(agent.dimension):
 			if agent.env.landscape[i][j] == terrainType:
 				movingTargetProb[i][j] = -math.inf
-			else
+			else:
 				movingTargetProb[i][j] = agent.inCellProb[i][j] + math.log(float(1)/3, 2)
 	return movingTargetProb
 
@@ -179,7 +180,7 @@ def pairUtilityMovingTarget(a, b, s, agent):
 	movingTargetProbB = 0.0
 	if agent.env.landscape[a[0]][a[1]] == terrainType:
 		movingTargetProbA = -math.inf
-	else
+	else:
 		movingTargetProbA = agent.inCellProb[a[0]][a[1]] + math.log(float(1)/3, 2)
 	if agent.env.landscape[b[0]][b[1]] == terrainType:
 		movingTargetProbB = -math.inf
