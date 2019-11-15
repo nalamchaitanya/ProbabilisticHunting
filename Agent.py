@@ -15,7 +15,9 @@ class Agent:
         self.env = env
         for i in range(self.dimension):
             for j in range(self.dimension):
-                self.foundInCellProb += math.log(1-self.falseNeg[self.env.landscape[i][j]],2);
+                self.foundInCellProb += math.log(1-self.falseNeg[self.env.landscape[i][j]],2)
+        self.row = -1
+        self.col = -1
 
     # Updates probability based on the event that row, column doesn't have target
     # P(Bj/Ai) i.e. target not in Bj given Ai (when i=j it is equal to False positive prob of that cell)(Cell Equal)
@@ -25,13 +27,18 @@ class Agent:
         self.foundInCellProb[row][column] += math.log(self.falseNeg[self.env.landscape[row][column]],2)
 
     # Computes the number of steps taken to reach the target using probabilistic hunting
-    def getSearchCount(self, strategy):
+    def getSearchCount(self, strategy, distance):
         count = 0
+        self.row = 0
+        self.col = 0
         (row, column) = strategy(self)
+        count += distance((0,0), (row,column))
         while(self.env.search(row,column) == False):
             # print("searching : "+str(row)+" "+str(column))
-            count += 1
             # pdb.set_trace()
             self.updateProbability(row,column)
+            self.row = row
+            self.col = column
             (row, column) = strategy(self)
+            count += distance((self.row,self.col),(row,column))+1
         return count
