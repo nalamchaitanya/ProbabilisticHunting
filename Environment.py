@@ -45,3 +45,26 @@ class Environment:
                 return False
             else:
                 return True
+
+    def move_Target(self):
+        row_Target , col_Target = self.target
+        list_neighbours=[]
+        for i in [-1,0,1]:
+            for j in [-1,0,1]:
+                if i == 0 and j == 0:
+                    continue
+                elif i*j == 0 and (0<=row_Target+i<self.dimension and 0<=col_Target+j<self.dimension):
+                    list_neighbours.append((row_Target+i,col_Target+j))
+
+        self.target= list_neighbours[int(random.uniform(0,len(list_neighbours)))]
+
+    def getTargetTerrainType(self):
+        actual_Terrain=self.landscape[self.target[0]][self.target[1]]
+        if actual_Terrain==0:
+            return random.choice([1,2,3])
+        elif actual_Terrain==1:
+            return random.choice([0, 2, 3])
+        elif actual_Terrain==2:
+            return random.choice([0, 1, 3])
+        elif actual_Terrain==3:
+            return random.choice([0, 1, 2])
